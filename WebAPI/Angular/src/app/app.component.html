@@ -1,0 +1,26 @@
+<!-- Container  -->
+
+<div class="main">
+  <div class="heading"><span>TO DO List</span><button (click)="showAd = !showAd"><i class="fas fa-plus-circle"></i></button></div>
+  <div class="wrapper">
+    <form *ngIf="showAd">
+        <input placeholder="Todo description" type="text" #todoInput maxlength="64"/>
+        <button class="btn-success" (click)="create(todoInput.value)"><i class="fas fa-plus-circle"></i></button>
+    </form>
+    <div class="table">
+      <div class="table-row" *ngFor="let todo of todos">
+        <td class="{{(todo.Complete ? 'complete-line' : '')}}" *ngIf="!todo.editing">{{todo.Description}}</td>
+
+        <div class="edit" *ngIf="todo.editing">
+          <input type="text" #todoEditInput value="{{todo.Description}}" maxlength="64"/>
+          <button type="submit" (click)="save(todo.Id, todoEditInput.value, todo.Complete)"><i class="fas fa-save"></i></button>
+        </div>
+        <div>
+        <td *ngIf="!todo.editing" id="{{todo.Id}}"><button class="{{(todo.Complete ? 'complete' : 'incomplete')}}" (click)="todo.Complete = !todo.Complete; save(todo.Id, todo.Description, todo.Complete)"><i class="fas fa-check-circle"></i></button></td>
+        <td class="" *ngIf="!todo.editing"><button (click)="todo.editing = !todo.editing"><i class="fas fa-edit"></i></button></td>
+        <td class="" *ngIf="!todo.editing"><button type="submit" (click)="delete(todo.Id)"><i class="fas fa-trash-alt"></i></button></td>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
