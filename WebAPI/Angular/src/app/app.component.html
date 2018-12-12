@@ -1,7 +1,15 @@
 <!-- Container  -->
 
 <div class="main">
-  <div class="heading"><span>TO DO List</span><button (click)="showAd = !showAd"><i class="fas fa-plus-circle"></i></button></div>
+  <div class="heading">
+    <span>TO DO List</span>
+    <button (click)="order('desc')"><i class="fas fa-angle-down"></i></button>
+    <button (click)="order('asc')"><i class="fas fa-angle-up"></i></button>
+    <button (click)="order('complete')"><i class="fas fa-check-double"></i></button>
+    <button (click)="order('uncomplete')"><i class="fas fa-times"></i></button>
+    <button (click)="order('')"><i class="fas fa-list-ul"></i></button>
+    <button (click)="showAd = !showAd"><i class="fas fa-plus-circle"></i></button>
+  </div>
   <div class="wrapper">
     <form *ngIf="showAd">
         <input placeholder="Todo description" type="text" #todoInput maxlength="64"/>

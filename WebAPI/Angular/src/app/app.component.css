@@ -61,7 +61,7 @@ button
 {
   width:50em;
   margin:auto;
-  background-color:#D3D3D3;
+  background-color:	#585858;
 }
 
 /* Hover */
@@ -127,7 +127,7 @@ button
 
 .table-row:nth-of-type(odd)
 {
-  background-color:#A9A9A9;
+  background-color:#484848;
 }
 
 /* Other  */

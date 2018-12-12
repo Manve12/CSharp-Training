@@ -12,10 +12,29 @@ namespace WebAPI.Controllers
     public class TodoController : ApiController
     {
         // api/Todo <= returns all
-        public List<Todo> Get()
+        // returns list depending on the ordering passed in, if none passed in, it will return ordered by the id
+        public List<Todo> Get(string orderBy = "")
         {
-            return TodoRepository.Todos.OrderBy(t=>t.Id).ToList(); // returns list of Todos ordered by the id
+            if (orderBy == "desc")
+            {
+                return TodoRepository.Todos.OrderByDescending(t => t.Id).ToList(); // returns list of Todos ordered descending by the id
+            }
+            else if (orderBy == "asc")
+            {
+                return TodoRepository.Todos.OrderBy(t => t.Id).ToList(); // returns list of Todos ordered descending by the id
+            }
+            else if (orderBy == "complete")
+            {
+                return TodoRepository.Todos.OrderBy(t => t.Id).Where(t => t.Complete == true).ToList(); // returns list of Todos ordered by complete as true
+            }
+            else if (orderBy == "uncomplete")
+            {
+                return TodoRepository.Todos.OrderBy(t => t.Id).Where(t => t.Complete == false).ToList(); // returns list of Todos ordered by complete as false
+            }
+
+            return TodoRepository.Todos.OrderBy(t => t.Id).ToList(); // returns list of Todos ordered by the id
         }
+
 
         // api/Todo/{id}  <= returns with id or none
         public Todo Get(int Id)
@@ -23,16 +42,12 @@ namespace WebAPI.Controllers
             return Get().Select(t=>t).Where(t=>t.Id == Id).FirstOrDefault(); // uses Get() method and finds the first item in the returned list by the id provided
         }
 
+       
         // api/Todo/Set?description={desc}
         [HttpPost]
         public void Set(string description)
         {
-            int nextId = 1;
-            //calculate the next ID
-            if (TodoRepository.Todos.LastOrDefault() != null)
-            {
-                nextId = TodoRepository.Todos.LastOrDefault().Id + 1;
-            }
+            int nextId = TodoRepository.Todos.Count() + 1;
             //create a new todo and assign the id, description and status
             Todo newTodo = new Todo();
             newTodo.Id = nextId;

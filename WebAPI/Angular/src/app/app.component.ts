@@ -29,6 +29,13 @@ export class AppComponent {
     });
   }
 
+  order(message):void
+  {
+    this.http.get('http://localhost:62876/api/Todo?orderBy='+message).subscribe(data => {
+      this.todos = data;
+    });
+  }
+
    // Inject HttpClient into your component or service.
   constructor(private http: HttpClient) {}
   ngOnInit(): void {
